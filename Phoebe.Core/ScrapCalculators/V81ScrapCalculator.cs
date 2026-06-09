@@ -54,9 +54,9 @@ public class V81ScrapCalculator(
 			for(int i = 0; i < ItemCountToSpawn; i++) {
 				int index;
 				if(HasPhoebeFixMod) {
-					index = selectedLevel.SpawnableScrapWeights.GetRandomIndexWeightedFixed(_anomalyRandom);
+					index = selectedLevel.GetScrapRarityList().GetRandomIndexWeightedFixed(_anomalyRandom);
 				} else {
-					index = selectedLevel.SpawnableScrapWeights.GetRandomIndexWeightedVanilla(_anomalyRandom);
+					index = selectedLevel.GetScrapRarityList().GetRandomIndexWeightedVanilla(_anomalyRandom);
 				}
 				scrapToSpawn[i] = possibleScrap[index].Scrap;
 			}

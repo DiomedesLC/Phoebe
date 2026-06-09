@@ -30,11 +30,20 @@ public static class MoonContentExport {
 			)));
 		}
 
+		List<(int Rarity, PhoebeDungeonInfo Dungeon)> possibleDungeons = [];
+		foreach(IntWithRarity intWithRarity in level.dungeonFlowTypes) {
+			possibleDungeons.Add((intWithRarity.rarity, new PhoebeDungeonInfo(
+				UnityEngine.Object.FindObjectOfType<RoundManager>().dungeonFlowTypes[intWithRarity.id].dungeonFlow.name,
+				intWithRarity.id == 4 ? 6 : 0 // mineshaft +6
+			)));
+		}
+
 		return new PhoebeMoonInfo(
 			level.PlanetName,
 			level.minScrap,
 			level.maxScrap,
-			spawnableScrap
+			spawnableScrap,
+			possibleDungeons
 		);
 	}
 
