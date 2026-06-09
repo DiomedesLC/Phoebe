@@ -1,4 +1,4 @@
-﻿namespace Phoebe.Utils.Extensions;
+﻿namespace Phoebe;
 
 static class RandomExtensions {
 	internal static T NextItem<T>(this Random random, IList<T> items) {

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Runtime.CompilerServices;
 
-namespace Phoebe.Data;
+namespace Phoebe;
 
 public class RarityList(int[] weights) : IEnumerable<int> {
 	public int TotalRarity { get; } = weights.Sum();

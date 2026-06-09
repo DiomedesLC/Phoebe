@@ -1,4 +1,4 @@
-﻿namespace Phoebe.Utils.Extensions;
+﻿namespace Phoebe;
 
 public static class ICollectionExtensions {
 	public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> items) {

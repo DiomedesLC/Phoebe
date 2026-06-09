@@ -1,6 +1,6 @@
-﻿using Phoebe.Data;
+﻿using Phoebe;
 
-namespace Phoebe.ScrapCalculators;
+namespace Phoebe;
 
 public interface IScrapCalculator {
 	int ItemCountToSpawn { get; }

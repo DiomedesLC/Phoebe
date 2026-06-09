@@ -2,8 +2,6 @@
 using BepInEx;
 using BepInEx.Logging;
 using Phoebe.ContentExporter.MoonContent;
-using Phoebe.Data;
-using Phoebe.ScrapCalculators;
 using UnityEngine;
 using UnityEngine.UI;
 

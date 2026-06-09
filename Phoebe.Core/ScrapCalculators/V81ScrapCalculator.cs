@@ -1,10 +1,10 @@
 ﻿using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-using Phoebe.Data;
-using Phoebe.Utils.Extensions;
+using Phoebe;
+using Phoebe;
 
-namespace Phoebe.ScrapCalculators;
+namespace Phoebe;
 
 // idk the last time the scrap spawning code was changed
 // this includes single item days, so it goes back at least as far as v60

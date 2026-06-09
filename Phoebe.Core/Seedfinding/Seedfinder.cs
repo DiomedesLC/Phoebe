@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Diagnostics;
 
-namespace Phoebe.Seedfinding;
+namespace Phoebe;
 
 public class Seedfinder {
 	public const int MIN_SEED = 1;

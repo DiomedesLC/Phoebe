@@ -1,4 +1,4 @@
-﻿namespace Phoebe.Data;
+﻿namespace Phoebe;
 
 public record PhoebeEnemyInfo(
 	string EnemyName,

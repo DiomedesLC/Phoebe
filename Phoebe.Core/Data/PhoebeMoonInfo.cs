@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Phoebe.Data;
+namespace Phoebe;
 
 public record PhoebeMoonInfo(
 	string MoonName,

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
-using Phoebe.Utils.Extensions;
+using Phoebe;
 
-namespace Phoebe.Data;
+namespace Phoebe;
 
 public class PhoebeCurve : ICollection<KeyValuePair<float, float>>, IDictionary<float, float>, IEnumerable<KeyValuePair<float, float>>, IReadOnlyCollection<KeyValuePair<float, float>>, IReadOnlyDictionary<float, float>, IDictionary {
 	public float this[float key] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); } // No idea what to do here
