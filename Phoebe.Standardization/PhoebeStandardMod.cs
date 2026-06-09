@@ -8,10 +8,10 @@ using MonoMod.Cil;
 using UnityEngine;
 using Random = System.Random;
 
-namespace Phoebe.PredictableScrapMod;
+namespace Phoebe.Standardization;
 
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-public class PredictableScrapMod : BaseUnityPlugin {
+public class PhoebeStandardMod : BaseUnityPlugin {
 	internal new static ManualLogSource Logger { get; private set; } = null!;
 
 	List<int> _overwrittenValues = [];

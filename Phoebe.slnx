@@ -7,4 +7,5 @@
   <Project Path="Phoebe.CLI/Phoebe.CLI.csproj" />
   <Project Path="Phoebe.ContentExporter/Phoebe.ContentExporter.csproj" />
   <Project Path="Phoebe.Core/Phoebe.Core.csproj" />
+  <Project Path="Phoebe.Standardization/Phoebe.Standardization.csproj" />
 </Solution>
