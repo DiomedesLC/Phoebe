@@ -1,0 +1,10 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Phoebe.CLI/Phoebe.CLI.csproj" />
+  <Project Path="Phoebe.ContentExporter/Phoebe.ContentExporter.csproj" />
+  <Project Path="Phoebe.Core/Phoebe.Core.csproj" />
+</Solution>

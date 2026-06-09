@@ -1,0 +1,16 @@
+﻿<Project>
+    <PropertyGroup>
+        <Version>0.1.0</Version>
+
+        <LangVersion>latest</LangVersion>
+
+        <!-- Embed Debug Symbols for Easier Debugging -->
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>embedded</DebugType>
+        <!--
+        Trim the project path to prevent players from potentially
+        viewing Private Information in stack traces.
+        -->
+        <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=./</PathMap>
+    </PropertyGroup>
+</Project>
