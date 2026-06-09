@@ -9,4 +9,5 @@ internal static class ZeekerssRnd {
 	public static Random EnemySpawn(int seed) => new Random(seed + 40);
 	public static Random DaytimeEnemySpawn(int seed) => new Random(seed + 43);
 	public static Random OutsideEnemySpawn(int seed) => new Random(seed + 41);
+	public static Random Level(int seed) => new Random(seed);
 }

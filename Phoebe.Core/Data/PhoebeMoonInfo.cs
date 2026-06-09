@@ -8,7 +8,7 @@ public record PhoebeMoonInfo(
 	int MinScrap,
 	int MaxScrap,
 	List<(int Rarity, PhoebeScrapInfo Scrap)> SpawnableScrap,
-	List<(int Rarity, PhoebeDungeonInfo Scrap)> PossibleDungeons
+	List<(int Rarity, PhoebeDungeonInfo Dungeon)> PossibleDungeons
 ) {
 	RarityList? _cachedScrapWeights, _cachedDungeonWeights = null;
 
