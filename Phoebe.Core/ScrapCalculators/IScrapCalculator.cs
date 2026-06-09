@@ -6,5 +6,5 @@ public interface IScrapCalculator {
 	int ItemCountToSpawn { get; }
 
 	void Setup() { }
-	void Calculate(ref ScrapSpawn[] items);
+	void Calculate(ref ScrapSpawn[] items, out int totalValue);
 }

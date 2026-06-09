@@ -25,11 +25,11 @@ public class PhoebeContentExporter : BaseUnityPlugin {
 			calculator.Setup();
 			calculator.Setup();
 			ScrapSpawn[] items = new ScrapSpawn[calculator.ItemCountToSpawn];
-			calculator.Calculate(ref items);
+			calculator.Calculate(ref items, out int totalValue);
 			foreach(ScrapSpawn spawn in items) {
 				Logger.LogDebug((spawn.Scrap.ItemName));
 			}
-			Logger.LogInfo($"{items.Length} items worth {items.Sum(it => it.Value)}");
+			Logger.LogInfo($"{items.Length} items worth {totalValue}");
 			GrabbableObject[] grabbableObjects = FindObjectsOfType<GrabbableObject>();
 			Logger.LogInfo($"actual items {grabbableObjects.Length} worht {grabbableObjects.Sum(it => it.scrapValue)}");
 		};

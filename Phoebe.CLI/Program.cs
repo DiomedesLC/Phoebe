@@ -32,7 +32,7 @@ PhoebeMoonInfo info = AllMoonInfos.First(it => it.MoonName == "41 Experimentatio
 V81ScrapCalculator calculator = new V81ScrapCalculator(info, 6827935);
 calculator.Setup();
 ScrapSpawn[] spawned = new ScrapSpawn[calculator.ItemCountToSpawn];
-calculator.Calculate(ref spawned);
+calculator.Calculate(ref spawned, out int totalValue);
 
 foreach(ScrapSpawn spawn in spawned) {
 	Console.WriteLine($"{spawn.Scrap.ItemName}: {spawn.Value}");

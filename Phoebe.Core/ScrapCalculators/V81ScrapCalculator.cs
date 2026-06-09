@@ -43,7 +43,7 @@ public class V81ScrapCalculator(
 		SingleItemDay = CalculateSingleItemDay();
 	}
 
-	public void Calculate(ref ScrapSpawn[] items) {
+	public void Calculate(ref ScrapSpawn[] items, out int totalValue) {
 		PhoebeScrapInfo[] scrapToSpawn = ArrayPool<PhoebeScrapInfo>.Shared.Rent(ItemCountToSpawn);
 
 		if(IsSingleItemDay()) {
@@ -66,8 +66,36 @@ public class V81ScrapCalculator(
 			_scrapVariantRandom = ZeekerssRnd.ScrapVariant(seed);
 		}
 
+		totalValue = 0;
 		for(int i = 0; i < ItemCountToSpawn; i++) {
 			items[i] = SpawnScrap(scrapToSpawn[i], IsSingleItemDay());
+			totalValue += items[i].Value;
+		}
+
+		if(CalculateScrapValue && IsSingleItemDay()) {
+			int threshold = 600;
+			if(SingleItemDay!.IsTwoHanded) {
+				threshold = 1500;
+			}
+			if(totalValue > 4500) {
+				totalValue = 0;
+				for(int i = 0; i < ItemCountToSpawn; i++) {
+					int adjustedValue = (int)(items[i].Value * 0.7f);
+					totalValue += adjustedValue;
+					items[i] = items[i] with {
+						Value = adjustedValue	
+					};
+				}
+			} else if(totalValue < threshold) {
+				totalValue = 0;
+				for(int i = 0; i < ItemCountToSpawn; i++) {
+					int adjustedValue = (int)(items[i].Value * 1.4f);
+					totalValue += adjustedValue;
+					items[i] = items[i] with {
+						Value = adjustedValue	
+					};
+				}
+			}
 		}
 
 		ArrayPool<PhoebeScrapInfo>.Shared.Return(scrapToSpawn);
