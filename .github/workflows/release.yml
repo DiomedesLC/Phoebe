@@ -24,7 +24,7 @@ jobs:
 
     - name: Build solution
       run: |
-        dotnet build --no-restore --configuration Release
+        dotnet build --no-restore --configuration Release -v d
 
     - name: Publish Windows CLI
       run: |

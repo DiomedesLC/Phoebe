@@ -2,7 +2,7 @@
 namespace Phoebe.CLI;
 
 public class ContainsAllFilter(HashSet<string> Items) : IScrapFilter {
-	public bool Evaluate(V81ScrapCalculator calculator, int totalValue, ScrapSpawn[] spawns) {
+	public bool Evaluate(IScrapCalculator calculator, int totalValue, ScrapSpawn[] spawns) {
 		if(spawns.Length < Items.Count) return false;
 		
 		HashSet<string> found = []; // todo: look at some hashset pool?

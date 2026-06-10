@@ -16,12 +16,8 @@ readme = "./README.md"
 outdir = "../Packages"
 
 [[build.copy]]
-source = "../bin/Release/netstandard2.1/me.loaforc.phoebe.contentexporter.dll"
+source = "../bin/Release/netstandard2.1/me.loaforc.phoebe.standardmod.dll"
 target = "./BepInEx/plugins/PhoebeContentExporter/"
-
-[[build.copy]]
-source = "../bin/Release/netstandard2.1/Phoebe.Core.dll"
-target = "./BepInEx/core/PhoebeContentExporter/"
 
 [publish]
 repository = "https://thunderstore.io"
