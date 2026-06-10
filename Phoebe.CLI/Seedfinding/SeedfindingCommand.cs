@@ -254,7 +254,6 @@ public class SeedfindingCommand : Command<SeedfindingCommandSettings> {
                         HasPhoebeFixMod = cfg.PhoebeFix,
                         AdditionalDungeonScrap = dungeonInfo.AdditionalScrap
                     };
-                    scrapCalculator.Setup();
 
                     if(cfg.ScrapSetupFilters.Any(it => !it.Evaluate(scrapCalculator))) {
                         return false;

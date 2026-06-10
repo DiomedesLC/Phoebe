@@ -7,11 +7,8 @@ namespace Phoebe;
 // idk the last time the scrap spawning code was changed
 // this includes single item days, so it goes back at least as far as v60
 // todo: add like a ChallengeMoonInfo? nullable parameter, as that includes an increasedScrapSpawnRateIndex and adds more scrap overall
-public class V81ScrapCalculator(
-	PhoebeMoonInfo selectedLevel,
-	int seed
-) : IScrapCalculator {
-	Random _anomalyRandom = ZeekerssRnd.Anomaly(seed);
+public class V81ScrapCalculator : IScrapCalculator {
+	Random _anomalyRandom;
 	Random? _scrapVariantRandom = null;
 
 	// +6 for mineshafts, i don't want to have to bring in a `PhoebeDungeonInfo` into the calculator if i dont have too, although i dont like the outside caller modifying this, this directly
@@ -22,8 +19,24 @@ public class V81ScrapCalculator(
 
 	const float scrapAmountMultiplier = 1f;
 	const float scrapValueMultiplier = 0.4f;
+	private readonly PhoebeMoonInfo _selectedLevel;
+	private readonly int _seed;
 
-	List<PhoebeWithRarity<PhoebeScrapInfo>> possibleScrap => selectedLevel.SpawnableScrap;
+	public V81ScrapCalculator(
+		PhoebeMoonInfo selectedLevel,
+		int seed
+	) {
+		_selectedLevel = selectedLevel;
+		_seed = seed;
+		_anomalyRandom = ZeekerssRnd.Anomaly(seed);
+
+		ItemCountToSpawn = (int) (_anomalyRandom.Next(_selectedLevel.MinScrap, _selectedLevel.MaxScrap) * scrapAmountMultiplier);
+		ItemCountToSpawn += AdditionalDungeonScrap;
+
+		SingleItemDay = CalculateSingleItemDay();
+	}
+
+	List<PhoebeWithRarity<PhoebeScrapInfo>> possibleScrap => _selectedLevel.SpawnableScrap;
 
 	public PhoebeScrapInfo? SingleItemDay { get; private set; }
 	public int ItemCountToSpawn { get; private set; }
@@ -33,13 +46,6 @@ public class V81ScrapCalculator(
 	[MemberNotNullWhen(true, nameof(SingleItemDay))]
 #endif
 	public bool IsSingleItemDay() => SingleItemDay != null;
-
-	public void Setup() {
-		ItemCountToSpawn = (int) (_anomalyRandom.Next(selectedLevel.MinScrap, selectedLevel.MaxScrap) * scrapAmountMultiplier);
-		ItemCountToSpawn += AdditionalDungeonScrap;
-
-		SingleItemDay = CalculateSingleItemDay();
-	}
 
 	public void Calculate(ref ScrapSpawn[] items, out int totalValue) {
 		PhoebeScrapInfo[] scrapToSpawn = ArrayPool<PhoebeScrapInfo>.Shared.Rent(ItemCountToSpawn);
@@ -52,16 +58,16 @@ public class V81ScrapCalculator(
 			for(int i = 0; i < ItemCountToSpawn; i++) {
 				int index;
 				if(HasPhoebeFixMod) {
-					index = selectedLevel.GetScrapRarityList().GetRandomIndexWeightedFixed(_anomalyRandom);
+					index = _selectedLevel.GetScrapRarityList().GetRandomIndexWeightedFixed(_anomalyRandom);
 				} else {
-					index = selectedLevel.GetScrapRarityList().GetRandomIndexWeightedVanilla(_anomalyRandom);
+					index = _selectedLevel.GetScrapRarityList().GetRandomIndexWeightedVanilla(_anomalyRandom);
 				}
 				scrapToSpawn[i] = possibleScrap[index].Item;
 			}
 		}
 
 		if(CalculateScrapVariants) {
-			_scrapVariantRandom = ZeekerssRnd.ScrapVariant(seed);
+			_scrapVariantRandom = ZeekerssRnd.ScrapVariant(_seed);
 		}
 
 		totalValue = 0;
