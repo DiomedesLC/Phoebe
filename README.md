@@ -13,7 +13,7 @@ Phoebe is mainly a standalone C# library that simulates Lethal Compay seeds.
 `Phoebe.ContentExporter` is a debug tool used for development
 
 ## Using the CLI
-Windows builds are available from the [latest release](https://github.com/DiomedesLC/Phoebe/releases/latest). The CLI requires a `.toml` config file ([Examples](https://github.com/DiomedesLC/Phoebe/Phoebe.CLI/examples)).
+Windows builds are available from the [latest release](https://github.com/DiomedesLC/Phoebe/releases/latest). The CLI requires a `.toml` config file ([Examples](https://github.com/DiomedesLC/Phoebe/tree/main/Phoebe.CLI/examples)).
 
 Important to note is when you start the CLI it will log one of the following:
 ```
