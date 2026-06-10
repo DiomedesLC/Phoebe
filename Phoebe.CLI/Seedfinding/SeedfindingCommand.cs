@@ -109,7 +109,7 @@ public class SeedfindingCommand : Command<SeedfindingCommandSettings> {
 
         Dictionary<string, IReadOnlyCollection<int>> result = [];
         foreach(SeedfindingTask task in tasks) {
-            AnsiConsole.MarkupLine($"Found [green]{task.FoundSeeds.Count}[/] seeds on [yellow]{task.Moon.MoonName}[/]");
+            AnsiConsole.MarkupLine($"Found [green]{task.FoundSeeds.Count}[/] seeds on [yellow]{task.Moon.MoonName}[/]; [blue]{(double)task.FoundSeeds.Count / (double)(cfg.EndSeed - cfg.StartSeed):0.######}%[/]");
             result[task.Moon.MoonName] = task.FoundSeeds;
         }
         if(tasks.Count > 1) {
