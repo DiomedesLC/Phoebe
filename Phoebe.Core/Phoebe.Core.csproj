@@ -7,6 +7,15 @@
         <RootNamespace>Phoebe</RootNamespace>
     </PropertyGroup>
 
+    <!-- NuGet Packaging -->
+    <PropertyGroup>
+        <PackageId>DiomedesLC.Phoebe</PackageId>
+        <Description>Seedfinding / Simulation tools for Lethal Company</Description>
+        
+        <IsPackable>true</IsPackable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
