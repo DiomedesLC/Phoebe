@@ -1,6 +1,6 @@
 ﻿namespace Phoebe;
 
-public class V81DungeonCalculator(PhoebeMoonInfo moon, int seed) : IDungeonCalculator {
+public class V40DungeonCalculator(PhoebeMoonInfo moon, int seed) : IDungeonCalculator {
 	Random _levelRandom = ZeekerssRnd.Level(seed);
 
 	public bool HasPhoebeFixMod { get; set; }

@@ -237,7 +237,7 @@ public class SeedfindingCommand : Command<SeedfindingCommandSettings> {
 
             Task.Run(() => {
                 seedfindingTask.FoundSeeds = seedfinder.Where(seed => {
-                    V81DungeonCalculator dungeonCalculator = new V81DungeonCalculator(moon, seed) {
+                    V40DungeonCalculator dungeonCalculator = new V40DungeonCalculator(moon, seed) {
                         HasPhoebeFixMod = cfg.PhoebeFix
                     };
                     PhoebeDungeonInfo dungeonInfo = dungeonCalculator.Calculate();
