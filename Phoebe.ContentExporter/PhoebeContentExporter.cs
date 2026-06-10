@@ -1,9 +1,6 @@
-﻿using System.Linq;
-using BepInEx;
+﻿using BepInEx;
 using BepInEx.Logging;
 using Phoebe.ContentExporter.MoonContent;
-using UnityEngine;
-using UnityEngine.UI;
 
 namespace Phoebe.ContentExporter;
 
@@ -13,7 +10,7 @@ public class PhoebeContentExporter : BaseUnityPlugin {
 
 	private void Awake() {
 		Logger = base.Logger;
-		On.StartOfRound.Awake += (orig, self) => {
+		On.StartOfRound.Start += (orig, self) => {
 			orig(self);
 			MoonContentExport.ExportAllMoonData();
 		};

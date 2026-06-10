@@ -16,5 +16,6 @@
 
     <ItemGroup>
       <EmbeddedResource Include="data\v81.json" />
+      <EmbeddedResource Include="data\v73-wesley.json" />
     </ItemGroup>
 </Project>

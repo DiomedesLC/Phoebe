@@ -1,0 +1,5 @@
+﻿moons = ["154 Etern"]
+
+[scrap]
+single_item_day = true
+items = ["Silent package"]

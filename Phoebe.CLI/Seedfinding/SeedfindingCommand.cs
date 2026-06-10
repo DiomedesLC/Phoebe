@@ -1,4 +1,4 @@
-using System.Buffers;
+﻿using System.Buffers;
 using System.IO.Compression;
 using System.Net.Mime;
 using System.Reflection;
@@ -86,6 +86,9 @@ public class SeedfindingCommand : Command<SeedfindingCommandSettings> {
             case "v81":
                 moonInfos = ReadFromResource<List<PhoebeMoonInfo>>("v81.json");
                 break;
+			case "v73-wesley":
+				moonInfos = ReadFromResource<List<PhoebeMoonInfo>>("v73-wesley.json");
+				break;
             default:
                 moonInfos = JsonConvert.DeserializeObject<List<PhoebeMoonInfo>>(File.ReadAllText(settings.GameVersion), JSONSettings)!;
                 break;
