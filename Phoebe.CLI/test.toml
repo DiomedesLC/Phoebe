@@ -1,4 +1,5 @@
-moons = ["assurance"]
+moons = ["220 Assurance", "56 Vow"]
 
 [scrap]
-items = ["zed dog"]
+single_item_day = true
+items = ["Zed Dog"]

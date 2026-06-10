@@ -17,6 +17,7 @@ public class PhoebeContentExporter : BaseUnityPlugin {
 			orig(self);
 			MoonContentExport.ExportAllMoonData();
 		};
+		/*
 		On.RoundManager.SpawnScrapInLevel += (orig, self) => {
 			orig(self);
 			V81ScrapCalculator calculator = new V81ScrapCalculator(MoonContentExport.ExportMoon(self.currentLevel), self.playersManager.randomMapSeed);
@@ -31,6 +32,7 @@ public class PhoebeContentExporter : BaseUnityPlugin {
 			GrabbableObject[] grabbableObjects = FindObjectsOfType<GrabbableObject>();
 			Logger.LogInfo($"actual items {grabbableObjects.Length} worht {grabbableObjects.Sum(it => it.scrapValue)}");
 		};
+		*/
 
 		Logger.LogInfo($"{MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
 	}

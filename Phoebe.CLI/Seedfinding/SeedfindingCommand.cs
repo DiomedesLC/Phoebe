@@ -1,9 +1,12 @@
 using System.Buffers;
 using System.IO.Compression;
+using System.Reflection.Metadata.Ecma335;
+using System.Text.Json;
 using Newtonsoft.Json;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using Spectre.Console.Rendering;
+using Tomlyn;
 
 namespace Phoebe.CLI;
 
@@ -25,6 +28,7 @@ public class SeedfindingCommand : Command<SeedfindingCommandSettings> {
         public ProgressTask ProgressBar { get; } = task;
         public int TargetTotal { get; set; } = 0;
         public IReadOnlyCollection<int> FoundSeeds;
+        public bool Finished;
     }
 
     class CompiledSeedfindingConfig {
@@ -51,37 +55,22 @@ public class SeedfindingCommand : Command<SeedfindingCommandSettings> {
         }
     }
 
-    JsonSerializerSettings JSONSettings = new() {
+    JsonSerializerSettings JSONSettings = new JsonSerializerSettings {
         ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
         PreserveReferencesHandling = PreserveReferencesHandling.None,
-        TypeNameHandling = TypeNameHandling.All,
-        Formatting = Formatting.Indented,
-        Converters =
-        [
+        Formatting = Formatting.Indented
+    };
 
-        ]
+    TomlSerializerOptions TOMLOptions = new TomlSerializerOptions {
+        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
     };
 
 	protected override int Execute(CommandContext context, SeedfindingCommandSettings settings, CancellationToken cancellationToken) {
-        CompiledSeedfindingConfig cfg = new CompiledSeedfindingConfig() {
-            StartSeed = Seedfinder.MIN_SEED, EndSeed = Seedfinder.MAX_SEED  
-        };
-
-        List<PhoebeMoonInfo> AllMoonInfos = new();
-        string filePath = "Phoebe.CLI/data/v81.json";
-        Console.WriteLine("Loading existing file");
-        try {
-            AllMoonInfos = JsonConvert.DeserializeObject<List<PhoebeMoonInfo>>(File.ReadAllText(filePath), JSONSettings)!;
-        } catch(Exception e) {
-            ConsoleColor prevColor = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"Error happened while trying to load Phoebe Exported Data ({Path.GetFileName(filePath)}):\n{e}");
-            Console.ForegroundColor = prevColor;
+        CompiledSeedfindingConfig? cfg = ReadConfig(settings.ConfigPath);
+        if(cfg == null) {
+            AnsiConsole.MarkupLine("[red]Aborting seed finding[/]");
+            return 1;
         }
-
-        PhoebeMoonInfo info = AllMoonInfos.First(it => it.MoonName == "220 Assurance");
-        cfg.Moons.Add(info);
-        cfg.ScrapSetupFilters.Add(new SpecificSIDFilter("Zed Dog"));
 
         NeededStep? step = cfg.GetNeededStep();
         if(step == null) {
@@ -108,21 +97,110 @@ public class SeedfindingCommand : Command<SeedfindingCommandSettings> {
                     foreach(SeedfindingTask task in tasks) {
                         if(task.ProgressBar.Value < task.TargetTotal) {
                             task.ProgressBar.Increment(1);
+                            continue;
+                        }
+                        if(task.Finished && !task.ProgressBar.IsFinished) {
+                            task.ProgressBar.StopTask();
                         }
                     }
                 }
             });
 
+        Dictionary<string, IReadOnlyCollection<int>> result = [];
         foreach(SeedfindingTask task in tasks) {
             AnsiConsole.MarkupLine($"Found [green]{task.FoundSeeds.Count}[/] seeds on [yellow]{task.Moon.MoonName}[/]");
+            result[task.Moon.MoonName] = task.FoundSeeds;
         }
         if(tasks.Count > 1) {
             AnsiConsole.MarkupLine($"Found [green]{tasks.Sum(it => it.FoundSeeds.Count)}[/] total seeds");
         }
         AnsiConsole.MarkupLine($"Saved results to [yellow]{settings.OutputPath}[/]");
+        File.WriteAllText(settings.OutputPath, JsonConvert.SerializeObject(result, JSONSettings));
 
 		return 0;
 	}
+
+    CompiledSeedfindingConfig? ReadConfig(string configPath) {
+        if(!File.Exists(configPath)) {
+            AnsiConsole.MarkupLine($"[red]{configPath}[/] does not exist!");
+            return null;
+        }
+
+        SeedfindingConfig tomlConfig = TomlSerializer.Deserialize<SeedfindingConfig>(File.ReadAllText(configPath), TOMLOptions)!;
+        CompiledSeedfindingConfig cfg = new CompiledSeedfindingConfig() {
+            StartSeed = tomlConfig.StartSeed, EndSeed = tomlConfig.EndSeed,
+            PhoebeFix = tomlConfig.PhoebeFix  
+        };
+
+        List<PhoebeMoonInfo> AllMoonInfos = new();
+        string filePath = "Phoebe.CLI/data/v81.json";
+        Console.WriteLine("Loading existing file");
+        try {
+            AllMoonInfos = JsonConvert.DeserializeObject<List<PhoebeMoonInfo>>(File.ReadAllText(filePath), JSONSettings)!;
+        } catch(Exception e) {
+            ConsoleColor prevColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Error happened while trying to load Phoebe Exported Data ({Path.GetFileName(filePath)}):\n{e}");
+            Console.ForegroundColor = prevColor;
+        }
+
+        cfg.Moons.AddRange(AllMoonInfos.Where(it => tomlConfig.Moons.Contains(it.MoonName)));
+
+        SeedfindingConfig.ScrapConfig? scrapConfig = tomlConfig.Scrap;
+        if(scrapConfig != null) {
+            if(scrapConfig.SingleItemDay == true) { // == true because it could be null
+                if(scrapConfig.Items != null) {
+                    if(scrapConfig.Items.Count == 0) {
+                        AnsiConsole.MarkupLine("[red]'scrap.items' can not be empty! If you do not want to filter by items, remove the property[/]");
+                        return null;
+                    }
+                    cfg.ScrapSetupFilters.Add(new SpecificSIDFilter(scrapConfig.Items.ToHashSet()));
+                } else {
+                    cfg.ScrapSetupFilters.Add(new SIDFilter());
+                }
+            } else {
+                if(scrapConfig.Items != null) {
+                    if(scrapConfig.Items.Count == 0) {
+                        AnsiConsole.MarkupLine("[red]'scrap.items' can not be empty! If you do not want to filter by items, remove the property[/]");
+                        return null;
+                    }
+                    cfg.ScrapFilters.Add(new ContainsAllFilter(scrapConfig.Items.ToHashSet()));
+                }
+            }
+
+            if(scrapConfig.MinScrap != null) {
+                cfg.ScrapSetupFilters.Add(new MinItemCountFilter(scrapConfig.MinScrap.Value));
+            }
+            if(scrapConfig.MaxScrap != null) {
+                cfg.ScrapSetupFilters.Add(new MinItemCountFilter(scrapConfig.MaxScrap.Value));
+            }
+            if(scrapConfig.MinTotalValue != null) {
+                if(!cfg.PhoebeFix) {
+                    AnsiConsole.MarkupLine("[yellow]Without the PhoebeFix Mod scrap value is calculated incorrectly, it can be somewhat accurate on small facility layouts [dim]('scrap.min_total_value' enabled)[/]");
+                }
+                cfg.ScrapFilters.Add(new MinTotalValueFilter(scrapConfig.MinTotalValue.Value));
+            }
+            if(scrapConfig.MaxTotalValue != null) {
+                if(!cfg.PhoebeFix) {
+                    AnsiConsole.MarkupLine("[yellow]Without the PhoebeFix Mod scrap value is calculated incorrectly, it can be somewhat accurate on small facility layouts [dim]('scrap.max_total_value' enabled)[/]");
+                }
+                cfg.ScrapFilters.Add(new MaxTotalValueFilter(scrapConfig.MaxTotalValue.Value));
+            }
+        }
+
+        SeedfindingConfig.DungeonConfig? dungeonConfig = tomlConfig.Interior;
+        if(dungeonConfig != null) {
+            if(dungeonConfig.Flows != null) {
+                if(dungeonConfig.Flows.Count == 0) {
+                    AnsiConsole.MarkupLine("[red]'interior.flows' can not be empty! If you do not want to filter by interiors, remove the property[/]");
+                    return null;
+                }
+                cfg.DungeonFilters.Add(new DungeonFlowNameFilter(dungeonConfig.Flows.ToHashSet()));
+            }
+        }
+
+        return cfg;
+    }
 
     List<SeedfindingTask> SetupAllTasks(ProgressContext ctx, CompiledSeedfindingConfig cfg) {
         List<SeedfindingTask> tasks = [];
@@ -157,7 +235,8 @@ public class SeedfindingCommand : Command<SeedfindingCommandSettings> {
                     }
 
                     V81ScrapCalculator scrapCalculator = new V81ScrapCalculator(moon, seed) {
-                        HasPhoebeFixMod = cfg.PhoebeFix
+                        HasPhoebeFixMod = cfg.PhoebeFix,
+                        AdditionalDungeonScrap = dungeonInfo.AdditionalScrap
                     };
                     scrapCalculator.Setup();
 
@@ -179,6 +258,8 @@ public class SeedfindingCommand : Command<SeedfindingCommandSettings> {
                     ArrayPool<ScrapSpawn>.Shared.Return(spawned);
                     return true;
                 });
+
+                seedfindingTask.Finished = true;
             });
         }
 

@@ -1,8 +1,8 @@
 
 namespace Phoebe.CLI;
 
-public class DungeonFlowNameFilter(string FlowName) : IDungeonFilter {
+public class DungeonFlowNameFilter(HashSet<string> FlowNames) : IDungeonFilter {
 	public bool Evaluate(PhoebeDungeonInfo dungeon) {
-		return dungeon.FlowName == FlowName;
+		return FlowNames.Contains(dungeon.FlowName);
 	}
 }

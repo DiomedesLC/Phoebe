@@ -1,8 +1,8 @@
 
 namespace Phoebe.CLI;
 
-public class SpecificSIDFilter(string ItemName) : IScrapSetupFilter {
+public class SpecificSIDFilter(HashSet<string> ItemNames) : IScrapSetupFilter {
 	public bool Evaluate(V81ScrapCalculator calculator) {
-		return calculator.IsSingleItemDay() && calculator.SingleItemDay.ItemName == ItemName;
+		return calculator.IsSingleItemDay() && ItemNames.Contains(calculator.SingleItemDay.ItemName);
 	}
 }
