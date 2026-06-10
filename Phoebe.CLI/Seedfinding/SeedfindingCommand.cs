@@ -1,5 +1,6 @@
 using System.Buffers;
 using System.IO.Compression;
+using System.Net.Mime;
 using System.Reflection;
 using System.Reflection.Metadata.Ecma335;
 using System.Text.Json;
@@ -66,8 +67,31 @@ public class SeedfindingCommand : Command<SeedfindingCommandSettings> {
         PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
     };
 
+    T ReadFromResource<T>(string filePath) {
+        using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"Phoebe.CLI.data.{filePath}")) {
+            if (stream == null) {
+                throw new FileNotFoundException($"Could not find v81 resources");
+            }
+
+            using (StreamReader reader = new StreamReader(stream)) {
+                string fileContent = reader.ReadToEnd();
+                return JsonConvert.DeserializeObject<T>(fileContent, JSONSettings)!;
+            }
+        }
+    }
+
 	protected override int Execute(CommandContext context, SeedfindingCommandSettings settings, CancellationToken cancellationToken) {
-        CompiledSeedfindingConfig? cfg = ReadConfig(settings.ConfigPath);
+        List<PhoebeMoonInfo> moonInfos;
+        switch(settings.GameVersion) {
+            case "v81":
+                moonInfos = ReadFromResource<List<PhoebeMoonInfo>>("v81.json");
+                break;
+            default:
+                moonInfos = JsonConvert.DeserializeObject<List<PhoebeMoonInfo>>(File.ReadAllText(settings.GameVersion), JSONSettings)!;
+                break;
+        }
+
+        CompiledSeedfindingConfig? cfg = ReadConfig(new GameContent(moonInfos, 0), settings.ConfigPath);
         if(cfg == null) {
             AnsiConsole.MarkupLine("[red]Aborting seed finding[/]");
             return 1;
@@ -121,7 +145,7 @@ public class SeedfindingCommand : Command<SeedfindingCommandSettings> {
 		return 0;
 	}
 
-    CompiledSeedfindingConfig? ReadConfig(string configPath) {
+    CompiledSeedfindingConfig? ReadConfig(GameContent content, string configPath) {
         if(!File.Exists(configPath)) {
             AnsiConsole.MarkupLine($"[red]{configPath}[/] does not exist!");
             return null;
@@ -133,19 +157,7 @@ public class SeedfindingCommand : Command<SeedfindingCommandSettings> {
             PhoebeFix = tomlConfig.PhoebeFix  
         };
 
-        List<PhoebeMoonInfo> AllMoonInfos = [];
-        using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Phoebe.CLI.data.v81.json")) {
-            if (stream == null) {
-                throw new FileNotFoundException($"Could not find v81 resources");
-            }
-
-            using (StreamReader reader = new StreamReader(stream)) {
-                string fileContent = reader.ReadToEnd();
-                AllMoonInfos = JsonConvert.DeserializeObject<List<PhoebeMoonInfo>>(fileContent, JSONSettings)!;
-            }
-        }
-
-        cfg.Moons.AddRange(AllMoonInfos.Where(it => tomlConfig.Moons.Contains(it.MoonName)));
+        cfg.Moons.AddRange(content.Moons.Where(it => tomlConfig.Moons.Contains(it.MoonName)));
 
         SeedfindingConfig.ScrapConfig? scrapConfig = tomlConfig.Scrap;
         if(scrapConfig != null) {
