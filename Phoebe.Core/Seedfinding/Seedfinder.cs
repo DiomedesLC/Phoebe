@@ -9,6 +9,7 @@ public class Seedfinder {
 
 	public int StartSeed { get; set; } = MIN_SEED;
 	public int EndSeed { get; set; } = MAX_SEED;
+	public IProgress<int>? ProgressCallback;
 
 	public int SearchedSeeds() => EndSeed - StartSeed;
 
@@ -24,6 +25,7 @@ public class Seedfinder {
 		Stopwatch timer = Stopwatch.StartNew();
 		ConcurrentBag<int> foundSeeds = new ConcurrentBag<int>();
 		Partitioner<Tuple<int, int>> chunks = CreateChunks();
+		int scannedSeeds = 0;
 
 		Parallel.ForEach(chunks, chunk => {
 			(int start, int end) = chunk;
@@ -33,6 +35,8 @@ public class Seedfinder {
 					foundSeeds.Add(i);
 				}
 			}
+			Interlocked.Add(ref scannedSeeds, end - start);
+			ProgressCallback?.Report(scannedSeeds);
 		});
 
 		Console.WriteLine($"Took {timer.ElapsedMilliseconds}ms");
@@ -48,6 +52,7 @@ public class Seedfinder {
 		};
 
 		Partitioner<Tuple<int, int>> chunks = CreateChunks();
+		int scannedSeeds = 0;
 
 		try {
 			Parallel.ForEach(chunks, options, chunk => {
@@ -60,6 +65,8 @@ public class Seedfinder {
 						cts.Cancel();
 					}
 				}
+				Interlocked.Add(ref scannedSeeds, end - start);
+				ProgressCallback?.Report(scannedSeeds);
 			});
 		} catch(OperationCanceledException) { }
 
