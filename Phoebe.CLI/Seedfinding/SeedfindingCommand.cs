@@ -1,5 +1,6 @@
 using System.Buffers;
 using System.IO.Compression;
+using System.Reflection;
 using System.Reflection.Metadata.Ecma335;
 using System.Text.Json;
 using Newtonsoft.Json;
@@ -132,16 +133,16 @@ public class SeedfindingCommand : Command<SeedfindingCommandSettings> {
             PhoebeFix = tomlConfig.PhoebeFix  
         };
 
-        List<PhoebeMoonInfo> AllMoonInfos = new();
-        string filePath = "Phoebe.CLI/data/v81.json";
-        Console.WriteLine("Loading existing file");
-        try {
-            AllMoonInfos = JsonConvert.DeserializeObject<List<PhoebeMoonInfo>>(File.ReadAllText(filePath), JSONSettings)!;
-        } catch(Exception e) {
-            ConsoleColor prevColor = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"Error happened while trying to load Phoebe Exported Data ({Path.GetFileName(filePath)}):\n{e}");
-            Console.ForegroundColor = prevColor;
+        List<PhoebeMoonInfo> AllMoonInfos = [];
+        using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Phoebe.CLI.data.v81.json")) {
+            if (stream == null) {
+                throw new FileNotFoundException($"Could not find v81 resources");
+            }
+
+            using (StreamReader reader = new StreamReader(stream)) {
+                string fileContent = reader.ReadToEnd();
+                AllMoonInfos = JsonConvert.DeserializeObject<List<PhoebeMoonInfo>>(fileContent, JSONSettings)!;
+            }
         }
 
         cfg.Moons.AddRange(AllMoonInfos.Where(it => tomlConfig.Moons.Contains(it.MoonName)));

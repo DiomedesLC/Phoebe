@@ -15,8 +15,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="data\v81.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
+      <EmbeddedResource Include="data\v81.json" />
     </ItemGroup>
 </Project>
