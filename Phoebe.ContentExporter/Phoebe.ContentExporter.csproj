@@ -41,6 +41,10 @@
         <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all"/>
     </ItemGroup>
 
+    <Target Name="PackThunderstore" AfterTargets="PostBuildEvent" Condition="$(Configuration) == 'Release'">
+        <Exec Command="tcli build --config-path &quot;$(ProjectDir)pack/thunderstore.toml&quot; --package-version $(Version)"  />
+    </Target>
+
     <!-- Package References - Game Assembly HookGen -->
     <ItemGroup>
         <Reference Include="MMHOOK_Assembly-CSharp">

@@ -1,0 +1,30 @@
+[config]
+schemaVersion = "0.0.1"
+
+[package]
+namespace = "loaforc"
+name = "PhoebeContentExporter"
+description = "it's going to work this time."
+websiteUrl = "https://thunderstore.io"
+containsNsfwContent = false
+[package.dependencies]
+BepInEx-BepInExPack = "5.4.2305"
+
+[build]
+icon = "./icon.png"
+readme = "./README.md"
+outdir = "../Packages"
+
+[[build.copy]]
+source = "../bin/Release/netstandard2.1/me.loaforc.phoebe.contentexporter.dll"
+target = "./BepInEx/plugins/PhoebeContentExporter/"
+
+[[build.copy]]
+source = "../bin/Release/netstandard2.1/Phoebe.Core.dll"
+target = "./BepInEx/core/PhoebeContentExporter/"
+
+[publish]
+repository = "https://thunderstore.io"
+communities = [ "riskofrain2", ]
+[publish.categories]
+riskofrain2 = [ "items", "skills", ]
