@@ -468,7 +468,7 @@
             "Item1": 300,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level1Flow",
+              "FlowName": "Level1Flow",
               "AdditionalScrap": 0
             }
           },
@@ -477,7 +477,7 @@
             "Item1": 1,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level2Flow",
+              "FlowName": "Level2Flow",
               "AdditionalScrap": 0
             }
           },
@@ -486,7 +486,7 @@
             "Item1": 3,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level3Flow",
+              "FlowName": "Level3Flow",
               "AdditionalScrap": 6
             }
           }
@@ -1344,7 +1344,7 @@
             "Item1": 300,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level1Flow",
+              "FlowName": "Level1Flow",
               "AdditionalScrap": 0
             }
           },
@@ -1353,7 +1353,7 @@
             "Item1": 3,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level2Flow",
+              "FlowName": "Level2Flow",
               "AdditionalScrap": 0
             }
           },
@@ -1362,7 +1362,7 @@
             "Item1": 40,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level3Flow",
+              "FlowName": "Level3Flow",
               "AdditionalScrap": 6
             }
           }
@@ -2219,7 +2219,7 @@
             "Item1": 300,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level1Flow",
+              "FlowName": "Level1Flow",
               "AdditionalScrap": 0
             }
           },
@@ -2228,7 +2228,7 @@
             "Item1": 3,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level2Flow",
+              "FlowName": "Level2Flow",
               "AdditionalScrap": 0
             }
           },
@@ -2237,7 +2237,7 @@
             "Item1": 192,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level3Flow",
+              "FlowName": "Level3Flow",
               "AdditionalScrap": 6
             }
           }
@@ -2919,7 +2919,7 @@
             "Item1": 300,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level1Flow3Exits",
+              "FlowName": "Level1Flow3Exits",
               "AdditionalScrap": 0
             }
           }
@@ -3725,7 +3725,7 @@
             "Item1": 300,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level1Flow",
+              "FlowName": "Level1Flow",
               "AdditionalScrap": 0
             }
           },
@@ -3734,7 +3734,7 @@
             "Item1": 8,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level2Flow",
+              "FlowName": "Level2Flow",
               "AdditionalScrap": 0
             }
           },
@@ -3743,7 +3743,7 @@
             "Item1": 48,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level3Flow",
+              "FlowName": "Level3Flow",
               "AdditionalScrap": 6
             }
           }
@@ -4670,7 +4670,7 @@
             "Item1": 300,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level2Flow",
+              "FlowName": "Level2Flow",
               "AdditionalScrap": 0
             }
           },
@@ -4679,7 +4679,7 @@
             "Item1": 5,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level1Flow",
+              "FlowName": "Level1Flow",
               "AdditionalScrap": 0
             }
           },
@@ -4688,7 +4688,7 @@
             "Item1": 28,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level3Flow",
+              "FlowName": "Level3Flow",
               "AdditionalScrap": 6
             }
           }
@@ -4966,7 +4966,7 @@
             "Item1": 300,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level2Flow",
+              "FlowName": "Level2Flow",
               "AdditionalScrap": 0
             }
           },
@@ -4975,7 +4975,7 @@
             "Item1": 7,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level1Flow",
+              "FlowName": "Level1Flow",
               "AdditionalScrap": 0
             }
           },
@@ -4984,7 +4984,7 @@
             "Item1": 17,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level3Flow",
+              "FlowName": "Level3Flow",
               "AdditionalScrap": 6
             }
           }
@@ -5633,7 +5633,7 @@
             "Item1": 64,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level1Flow",
+              "FlowName": "Level1Flow",
               "AdditionalScrap": 0
             }
           },
@@ -5642,7 +5642,7 @@
             "Item1": 4,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level2Flow",
+              "FlowName": "Level2Flow",
               "AdditionalScrap": 0
             }
           },
@@ -5651,7 +5651,7 @@
             "Item1": 300,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level3Flow",
+              "FlowName": "Level3Flow",
               "AdditionalScrap": 6
             }
           }
@@ -6413,7 +6413,7 @@
             "Item1": 300,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level1Flow",
+              "FlowName": "Level1Flow",
               "AdditionalScrap": 0
             }
           },
@@ -6422,7 +6422,7 @@
             "Item1": 57,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level2Flow",
+              "FlowName": "Level2Flow",
               "AdditionalScrap": 0
             }
           },
@@ -6431,7 +6431,7 @@
             "Item1": 115,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level3Flow",
+              "FlowName": "Level3Flow",
               "AdditionalScrap": 6
             }
           }
@@ -7337,7 +7337,7 @@
             "Item1": 64,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level1Flow",
+              "FlowName": "Level1Flow",
               "AdditionalScrap": 0
             }
           },
@@ -7346,7 +7346,7 @@
             "Item1": 151,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level2Flow",
+              "FlowName": "Level2Flow",
               "AdditionalScrap": 0
             }
           },
@@ -7355,7 +7355,7 @@
             "Item1": 213,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level3Flow",
+              "FlowName": "Level3Flow",
               "AdditionalScrap": 6
             }
           }
@@ -8091,7 +8091,7 @@
             "Item1": 118,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level1Flow",
+              "FlowName": "Level1Flow",
               "AdditionalScrap": 0
             }
           },
@@ -8100,7 +8100,7 @@
             "Item1": 300,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level2Flow",
+              "FlowName": "Level2Flow",
               "AdditionalScrap": 0
             }
           }
@@ -8655,7 +8655,7 @@
             "Item1": 300,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level1Flow",
+              "FlowName": "Level1Flow",
               "AdditionalScrap": 0
             }
           },
@@ -8664,7 +8664,7 @@
             "Item1": 10,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level2Flow",
+              "FlowName": "Level2Flow",
               "AdditionalScrap": 0
             }
           },
@@ -8673,7 +8673,7 @@
             "Item1": 44,
             "Item2": {
               "$type": "Phoebe.PhoebeDungeonInfo, Phoebe.Core",
-              "DungeonName": "Level3Flow",
+              "FlowName": "Level3Flow",
               "AdditionalScrap": 6
             }
           }

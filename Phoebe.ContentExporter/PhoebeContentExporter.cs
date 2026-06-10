@@ -17,7 +17,7 @@ public class PhoebeContentExporter : BaseUnityPlugin {
 			orig(self);
 			MoonContentExport.ExportAllMoonData();
 		};
-		/*
+		/* todo: crashing
 		On.RoundManager.SpawnScrapInLevel += (orig, self) => {
 			orig(self);
 			V81ScrapCalculator calculator = new V81ScrapCalculator(MoonContentExport.ExportMoon(self.currentLevel), self.playersManager.randomMapSeed);
