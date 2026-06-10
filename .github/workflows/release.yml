@@ -41,3 +41,19 @@ jobs:
       with:
         name: nupkg-build
         path: ./*/bin/Release/*.nupkg
+
+  upload-release-artifacts:
+    name: Upload Release Artifacts
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v6
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v7
+
+      - name: Upload artifacts to Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ github.event.release.tag_name }} win-x64-cli/*.exe nupkg-build/*/bin/Release/*.nupkg
