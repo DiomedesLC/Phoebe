@@ -9,12 +9,17 @@ public class Seedfinder {
 
 	public int StartSeed { get; set; } = MIN_SEED;
 	public int EndSeed { get; set; } = MAX_SEED;
+	public int? CustomChunkSize { get; set; }
 	public IProgress<int>? ProgressCallback;
 
 	public int SearchedSeeds() => EndSeed - StartSeed;
 
 	Partitioner<Tuple<int, int>> CreateChunks() {
-		return Partitioner.Create(StartSeed, EndSeed);
+		if(CustomChunkSize == null) {
+			return Partitioner.Create(StartSeed, EndSeed);
+		} else {
+			return Partitioner.Create(StartSeed, EndSeed, CustomChunkSize.Value);
+		}
 	}
 
 	public static void WriteFoundSeeds(string fileName, IEnumerable<int> seeds) {
@@ -29,7 +34,6 @@ public class Seedfinder {
 
 		Parallel.ForEach(chunks, chunk => {
 			(int start, int end) = chunk;
-			Console.WriteLine($"Starting chunk! start = {start}. end = {end}");
 			for(int i = start; i < end; i++) {
 				if(predicate(i)) {
 					foundSeeds.Add(i);
@@ -39,7 +43,6 @@ public class Seedfinder {
 			ProgressCallback?.Report(scannedSeeds);
 		});
 
-		Console.WriteLine($"Took {timer.ElapsedMilliseconds}ms");
 		return foundSeeds;
 	}
 
@@ -57,10 +60,8 @@ public class Seedfinder {
 		try {
 			Parallel.ForEach(chunks, options, chunk => {
 				(int start, int end) = chunk;
-				Console.WriteLine($"Starting chunk! start = {start}. end = {end}");
 				for(int i = start; i < end; i++) {
 					if(predicate(i)) {
-						Console.WriteLine($"Found seed! {i}");
 						found = i;
 						cts.Cancel();
 					}
@@ -71,7 +72,6 @@ public class Seedfinder {
 		} catch(OperationCanceledException) { }
 
 		cts.Dispose();
-		Console.WriteLine($"Took {timer.ElapsedMilliseconds}ms");
 		return found;
 	}
 }
