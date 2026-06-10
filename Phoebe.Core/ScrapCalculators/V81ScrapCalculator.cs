@@ -23,7 +23,7 @@ public class V81ScrapCalculator(
 	const float scrapAmountMultiplier = 1f;
 	const float scrapValueMultiplier = 0.4f;
 
-	List<(int Rarity, PhoebeScrapInfo Scrap)> possibleScrap => selectedLevel.SpawnableScrap;
+	List<PhoebeWithRarity<PhoebeScrapInfo>> possibleScrap => selectedLevel.SpawnableScrap;
 
 	public PhoebeScrapInfo? SingleItemDay { get; private set; }
 	public int ItemCountToSpawn { get; private set; }
@@ -56,7 +56,7 @@ public class V81ScrapCalculator(
 				} else {
 					index = selectedLevel.GetScrapRarityList().GetRandomIndexWeightedVanilla(_anomalyRandom);
 				}
-				scrapToSpawn[i] = possibleScrap[index].Scrap;
+				scrapToSpawn[i] = possibleScrap[index].Item;
 			}
 		}
 
@@ -78,19 +78,19 @@ public class V81ScrapCalculator(
 			if(totalValue > 4500) {
 				totalValue = 0;
 				for(int i = 0; i < ItemCountToSpawn; i++) {
-					int adjustedValue = (int)(items[i].Value * 0.7f);
+					int adjustedValue = (int) (items[i].Value * 0.7f);
 					totalValue += adjustedValue;
 					items[i] = items[i] with {
-						Value = adjustedValue	
+						Value = adjustedValue
 					};
 				}
 			} else if(totalValue < threshold) {
 				totalValue = 0;
 				for(int i = 0; i < ItemCountToSpawn; i++) {
-					int adjustedValue = (int)(items[i].Value * 1.4f);
+					int adjustedValue = (int) (items[i].Value * 1.4f);
 					totalValue += adjustedValue;
 					items[i] = items[i] with {
-						Value = adjustedValue	
+						Value = adjustedValue
 					};
 				}
 			}
@@ -159,6 +159,6 @@ public class V81ScrapCalculator(
 			return null;
 		}
 
-		return possibleScrap[sidItem].Scrap;
+		return possibleScrap[sidItem].Item;
 	}
 }
