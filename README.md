@@ -23,6 +23,11 @@ Needed Step: ScrapCalc (3)
 ```
 In general, the higher the number the more complicated the filters are and will need more time. The tool will filter out seeds as soon as it possibly can (even on higher steps) to improve performance.
 
+### Command usage
+```shell
+./Phoebe.CLI.exe path/to/config --output optional_result_override_path.json
+```
+
 ### Full list of current options
 ```toml
 moons = ["220 Assurance"] # Required, case sensitive and (currently) needs the planet number
