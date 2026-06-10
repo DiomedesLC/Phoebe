@@ -1,6 +1,0 @@
-moons = ["220 Assurance", "56 Vow"]
-start_seed = 1
-end_seed = 10_000_000
-
-[interior]
-flows = ["Level3Flow"]
