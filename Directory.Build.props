@@ -4,6 +4,7 @@
 
         <LangVersion>latest</LangVersion>
 
+        <Authors>XuXiaolan,loaforc</Authors>
         <!-- Embed Debug Symbols for Easier Debugging -->
         <DebugSymbols>true</DebugSymbols>
         <DebugType>embedded</DebugType>

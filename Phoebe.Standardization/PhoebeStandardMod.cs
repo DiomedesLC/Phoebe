@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using BepInEx;
 using BepInEx.Logging;
@@ -109,6 +110,20 @@ public class PhoebeStandardMod : BaseUnityPlugin {
 			return GetRandomIndexWeightedFixed(weights, randomSeed);
 		};
 
+		On.RoundManager.InitializeRandomNumberGenerators += (orig, self) => {
+			orig(self);
+			self.hasInitializedLevelRandomSeed = true; // I don't think there's ever a point in turning this to false... lol
+													   // I'll do it anyway ig
+		};
+		On.StartOfRound.EndOfGame += ResetInitializedLevelRandomSeed;
 		Logger.LogInfo($"{MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
+	}
+
+	IEnumerator ResetInitializedLevelRandomSeed(On.StartOfRound.orig_EndOfGame orig, StartOfRound self, int bodiesInsured, int connectedPlayersOnServer, int scrapCollected) {
+		RoundManager.Instance.hasInitializedLevelRandomSeed = false;
+		IEnumerator origIEnumerator = orig(self, bodiesInsured, connectedPlayersOnServer, scrapCollected);
+		while(origIEnumerator.MoveNext()) {
+			yield return origIEnumerator.Current;
+		}
 	}
 }
