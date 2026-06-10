@@ -7,7 +7,7 @@ namespace Phoebe;
 // idk the last time the scrap spawning code was changed
 // this includes single item days, so it goes back at least as far as v60
 // todo: add like a ChallengeMoonInfo? nullable parameter, as that includes an increasedScrapSpawnRateIndex and adds more scrap overall
-public class V81ScrapCalculator : IScrapCalculator {
+public class V72ScrapCalculator : IScrapCalculator {
 	Random _anomalyRandom;
 	Random? _scrapVariantRandom = null;
 
@@ -22,7 +22,7 @@ public class V81ScrapCalculator : IScrapCalculator {
 	private readonly PhoebeMoonInfo _selectedLevel;
 	private readonly int _seed;
 
-	public V81ScrapCalculator(
+	public V72ScrapCalculator(
 		PhoebeMoonInfo selectedLevel,
 		int seed
 	) {

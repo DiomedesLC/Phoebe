@@ -250,7 +250,7 @@ public class SeedfindingCommand : Command<SeedfindingCommandSettings> {
                         return true;
                     }
 
-                    V81ScrapCalculator scrapCalculator = new V81ScrapCalculator(moon, seed) {
+                    V72ScrapCalculator scrapCalculator = new V72ScrapCalculator(moon, seed) {
                         HasPhoebeFixMod = cfg.PhoebeFix,
                         AdditionalDungeonScrap = dungeonInfo.AdditionalScrap
                     };
