@@ -34,7 +34,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: win-x64-cli
-        path: ./Phoebe.CLI/bin/Release/win-x64/publish/Phoebe.CLI.exe
+        path: ./*/publish/Phoebe.CLI.exe
 
     - name: Upload Nuget artifact
       uses: actions/upload-artifact@v4
