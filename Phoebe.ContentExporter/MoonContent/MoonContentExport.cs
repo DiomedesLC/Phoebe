@@ -12,7 +12,7 @@ public static class MoonContentExport {
 	internal static readonly JsonSerializerSettings JSONSettings = new() {
 		ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
 		PreserveReferencesHandling = PreserveReferencesHandling.None,
-		TypeNameHandling = TypeNameHandling.All,
+		TypeNameHandling = TypeNameHandling.None,
 		Formatting = Formatting.Indented,
 		Converters =
 		[
