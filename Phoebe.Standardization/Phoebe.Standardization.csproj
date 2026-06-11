@@ -43,7 +43,7 @@
     </ItemGroup>
 
     <Target Name="PackThunderstore" AfterTargets="PostBuildEvent" Condition="$(Configuration) == 'Release'">
-        <Exec Command="tcli build --config-path &quot;$(ProjectDir)pack/thunderstore.toml&quot; --package-version $(Version)"  />
+        <Exec Command="dotnet tcli build --config-path &quot;$(ProjectDir)pack/thunderstore.toml&quot; --package-version $(Version)"  />
     </Target>
 
     <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
