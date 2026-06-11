@@ -3,7 +3,7 @@ schemaVersion = "0.0.1"
 
 [package]
 namespace = "loaforc"
-name = "PhoebeContentExporter"
+name = "PhoebeStandardMod"
 description = "it's going to work this time."
 websiteUrl = "https://thunderstore.io"
 containsNsfwContent = false
