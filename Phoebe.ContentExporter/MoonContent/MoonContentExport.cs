@@ -160,9 +160,21 @@ public static class MoonContentExport {
 		}
 
 		List<PhoebeWithRarity<PhoebeEnemyInfo>> possibleInsideEnemies = [];
+		foreach(SpawnableEnemyWithRarity spawnableEnemyWithRarity in level.Enemies) {
+			possibleInsideEnemies.Add(new PhoebeWithRarity<PhoebeEnemyInfo>(spawnableEnemyWithRarity.rarity, EnemyTypeToPhoebeEnemyInfo(spawnableEnemyWithRarity.enemyType)));
+		}
 		List<PhoebeWithRarity<PhoebeEnemyInfo>> possibleOutsideEnemies = [];
+		foreach(SpawnableEnemyWithRarity spawnableEnemyWithRarity in level.OutsideEnemies) {
+			possibleOutsideEnemies.Add(new PhoebeWithRarity<PhoebeEnemyInfo>(spawnableEnemyWithRarity.rarity, EnemyTypeToPhoebeEnemyInfo(spawnableEnemyWithRarity.enemyType)));
+		}
 		List<PhoebeWithRarity<PhoebeEnemyInfo>> possibleDaytimeEnemies = [];
+		foreach(SpawnableEnemyWithRarity spawnableEnemyWithRarity in level.DaytimeEnemies) {
+			possibleDaytimeEnemies.Add(new PhoebeWithRarity<PhoebeEnemyInfo>(spawnableEnemyWithRarity.rarity, EnemyTypeToPhoebeEnemyInfo(spawnableEnemyWithRarity.enemyType)));
+		}
 		List<PhoebeWithRarity<PhoebeEnemyInfo>> PossibleWeedEnemies = [];
+		foreach(SpawnableEnemyWithRarity spawnableEnemyWithRarity in RoundManager.Instance.WeedEnemies) {
+			PossibleWeedEnemies.Add(new PhoebeWithRarity<PhoebeEnemyInfo>(spawnableEnemyWithRarity.rarity, EnemyTypeToPhoebeEnemyInfo(spawnableEnemyWithRarity.enemyType)));
+		}
 
 		PhoebeCurve insideEnemySpawnChanceThroughoutDay = UnityToPhoebeCurve(level.enemySpawnChanceThroughoutDay);
 		PhoebeCurve outsideEnemySpawnChanceThroughoutDay = UnityToPhoebeCurve(level.outsideEnemySpawnChanceThroughDay);
