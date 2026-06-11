@@ -13,7 +13,7 @@ BepInEx-BepInExPack = "5.4.2305"
 [build]
 icon = "./icon.png"
 readme = "./README.md"
-outdir = "../Packages"
+outdir = "../../Packages"
 
 [[build.copy]]
 source = "../bin/Release/netstandard2.1/me.loaforc.phoebe.contentexporter.dll"
