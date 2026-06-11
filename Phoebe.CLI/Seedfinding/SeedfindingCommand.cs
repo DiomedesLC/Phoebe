@@ -236,6 +236,7 @@ public class SeedfindingCommand : Command<SeedfindingCommandSettings> {
             tasks.Add(seedfindingTask);
 
             Task.Run(() => {
+                try {
                 seedfindingTask.FoundSeeds = seedfinder.Where(seed => {
                     V40DungeonCalculator dungeonCalculator = new V40DungeonCalculator(moon, seed) {
                         HasPhoebeFixMod = cfg.PhoebeFix
@@ -273,6 +274,9 @@ public class SeedfindingCommand : Command<SeedfindingCommandSettings> {
                     ArrayPool<ScrapSpawn>.Shared.Return(spawned);
                     return true;
                 });
+                } catch(Exception ex) {
+                    AnsiConsole.WriteException(ex);
+                }
 
                 seedfindingTask.Finished = true;
             });
