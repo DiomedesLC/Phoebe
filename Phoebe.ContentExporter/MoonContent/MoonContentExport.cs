@@ -45,7 +45,8 @@ public static class MoonContentExport {
 			enemyType.DiversityPowerLevel,
 			enemyType.MaxCount,
 			GetSpawnPoolFromEnemyType(enemyType),
-			GetInteriorNameFromID(enemyType.increasedChanceInterior)
+			GetInteriorNameFromID(enemyType.increasedChanceInterior),
+			enemyType.canDie || enemyType.canBeDestroyed
 		);
 	}
 

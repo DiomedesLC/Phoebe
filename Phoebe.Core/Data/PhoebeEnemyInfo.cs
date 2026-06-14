@@ -11,7 +11,8 @@ public record PhoebeEnemyInfo(
 	int DiversityPowerLevel,
 	int MaxCount,
 	SpawnPool SpawnPool,
-	string? IncreasedChanceInteriorName
+	string? IncreasedChanceInteriorName,
+	bool CanDie
 );
 
 public enum SpawnPool {
